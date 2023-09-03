@@ -1,7 +1,7 @@
 import { Title } from "../components/Title";
 
-export default function Home() {
+export default function Sobre() {
   return (
-    <Title>Home</Title>
+    <Title>Sobre</Title>
   )
 }
