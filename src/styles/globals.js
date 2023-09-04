@@ -17,6 +17,10 @@ const GlobalStyle = createGlobalStyle`
     list-style: none;
   }
 
+  ul li {
+    line-height: 22px;
+  }
+
   * {
     box-sizing: border-box;
   }
