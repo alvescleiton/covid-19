@@ -1,23 +1,12 @@
-import { useEffect, useState } from "react";
-import { Title } from "../components/Title";
+import { Title } from "../components/Title"
 
-export default function Home() {
-  const [list, setList] = useState([])
-
-  useEffect(() => {
-    (async () => {
-      const listStates = await (await fetch('https://covid19-brazil-api.vercel.app/api/report/v1')).json()
-
-      setList(listStates.data)
-    })()
-  }, [])
-
+export default function Home({ list }) {
   return (
     <>
       <Title>Home</Title>
 
       <ul>
-        {list.map(item => (
+        {list?.map(item => (
           <li key={item.uid}>
             {item.state} - {item.cases.toLocaleString('pt-br')}
           </li>
@@ -25,4 +14,20 @@ export default function Home() {
       </ul>
     </>
   )
+}
+
+export async function getServerSideProps() {
+  let listStates = await (await fetch('https://covid19-brazil-api.vercel.app/api/report/v1')).json()
+
+  listStates = listStates.data.map(item => ({
+    uid: item.uid,
+    state: item.state,
+    cases: item.cases
+  }))
+
+  return {
+    props: {
+      list: listStates
+    }
+  }
 }
